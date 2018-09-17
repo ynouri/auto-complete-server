@@ -1,9 +1,19 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from setuptools import (
-    setup,
-    find_packages,
-)
+from setuptools import setup
+from setuptools import find_packages
+from setuptools.command.install import install as _install
+
+
+class install(_install):
+    """Override setup tools install class to allow NLTK data download."""
+
+    def run(self):
+        """Run install."""
+        _install.do_egg_install(self)
+        import nltk
+        nltk.download("punkt")
+
 
 extras_require = {
     'linter': [
@@ -29,18 +39,20 @@ setup(
     name='auto-complete-server',
     version='0.0.1',
     description="""Auto-completion server.""",
-    long_description_markdown_filename='README.md',
     author='Yacine Nouri',
     author_email='yacine@nouri.io',
     url='https://github.com/ynouri/auto-complete-server',
     include_package_data=True,
+    cmdclass={'install': install},
     install_requires=[
         "pandas>=0.22.0",
         "numpy>=1.14.0",
         "nltk>=3.2.0",
         "datrie>=0.7.1"
     ],
-    setup_requires=['setuptools-markdown'],
+    setup_requires=[
+        "nltk"
+    ],
     python_requires='>=3.6,<4',
     extras_require=extras_require,
     py_modules=['auto_complete_server'],
