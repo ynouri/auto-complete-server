@@ -4,6 +4,7 @@ import string
 import pandas as pd
 import json
 import nltk
+import operator
 
 
 class MostPopularCompletionModel(BaseAutoCompleteModel):
@@ -70,4 +71,22 @@ class MostPopularCompletionModel(BaseAutoCompleteModel):
 
     def generate_completions(self, prefix):
         """Generate completions for a given prefix."""
-        pass
+        # Return empty list if prefix is empty
+        if prefix == '':
+            return []
+
+        # Else, get sentences with their frequencies from the trie
+        sentences_freq = self.trie.items(prefix)
+        sorted_d = sorted(
+            dict(sentences_freq).items(),
+            key=operator.itemgetter(1),
+            reverse=True
+        )
+
+        # Return only a maximum number of completions set during model init
+        n_results = min(len(sorted_d), self.max_completions)
+
+        # Return only sentences, not the frequencies
+        completions = list(dict(sorted_d[:n_results]).keys())
+
+        return completions
