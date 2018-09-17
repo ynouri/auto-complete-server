@@ -1,0 +1,199 @@
+{
+  "NumTextMessages": 22264,
+  "Issues": [
+    {
+      "IssueId": 1,
+      "CompanyGroupId": 1,
+      "Messages": [
+        {
+          "IsFromCustomer": true,
+          "Text": "Hi! I placed an order on your website and I can't find the tracking number. Can you help me find out where my package is?"
+        },
+        {
+          "IsFromCustomer": true,
+          "Text": "I think I used my email address to log in."
+        },
+        {
+          "IsFromCustomer": false,
+          "Text": "How can I help you?"
+        }
+      ]
+    },
+    {
+      "IssueId": 10001,
+      "CompanyGroupId": 1,
+      "Messages": [
+        {
+          "IsFromCustomer": true,
+          "Text": "My battery exploded!"
+        },
+        {
+          "IsFromCustomer": true,
+          "Text": "It's on fire, it's melting the carpet!"
+        },
+        {
+          "IsFromCustomer": true,
+          "Text": "What should I do!"
+        },
+        {
+          "IsFromCustomer": false,
+          "Text": "How can I help you?"
+        }
+      ]
+    },
+    {
+      "IssueId": 20001,
+      "CompanyGroupId": 1,
+      "Messages": [
+        {
+          "IsFromCustomer": true,
+          "Text": "I'm interested in upgrading my plan."
+        },
+        {
+          "IsFromCustomer": true,
+          "Text": "Can you tell me a bit about Prime?"
+        },
+        {
+          "IsFromCustomer": true,
+          "Text": "My friend has it, and it seems like a great deal"
+        },
+        {
+          "IsFromCustomer": false,
+          "Text": "How can I help you?"
+        }
+      ]
+    },
+    {
+      "IssueId": 30001,
+      "CompanyGroupId": 40001,
+      "Messages": [
+        {
+          "IsFromCustomer": true,
+          "Text": "Hello"
+        },
+        {
+          "IsFromCustomer": false,
+          "Text": "Hello Werner how may I help you today?"
+        },
+        {
+          "IsFromCustomer": true,
+          "Text": "I have recently moved to a new apartment and would like to update my contact details"
+        },
+        {
+          "IsFromCustomer": false,
+          "Text": "Sure I can help you with that? Could you please provide me with your new address?"
+        },
+        {
+          "IsFromCustomer": true,
+          "Text": "Ok, 5 Seaman Ave, Apt 3F, New York, New York, 10034"
+        },
+        {
+          "IsFromCustomer": false,
+          "Text": "Let me update that information on our system"
+        },
+        {
+          "IsFromCustomer": false,
+          "Text": "OK Wernzio, I have updated your address to the system"
+        },
+        {
+          "IsFromCustomer": true,
+          "Text": "Great, thank. I also need to place a order for a new installation as the place I live currently does not have the required wiring"
+        },
+        {
+          "IsFromCustomer": false,
+          "Text": "Ok let me go ahead and request a work order for a new installation. Give me a moment..."
+        },
+        {
+          "IsFromCustomer": false,
+          "Text": "OK a installation order has been places. Seems the earilest we will be able to help you  is from the 20th February onwards"
+        },
+        {
+          "IsFromCustomer": false,
+          "Text": "does that suite you?"
+        },
+        {
+          "IsFromCustomer": true,
+          "Text": "Yes. It soes"
+        },
+        {
+          "IsFromCustomer": false,
+          "Text": "good, I have scheduled. A operator will be contacted you one day prior to lock down a time slot."
+        },
+        {
+          "IsFromCustomer": false,
+          "Text": "Is there anything else I can help you with?"
+        },
+        {
+          "IsFromCustomer": true,
+          "Text": "No that is it right now."
+        },
+        {
+          "IsFromCustomer": false,
+          "Text": "Great, was my pleasure helping you. Have a great day Wernzio"
+        },
+        {
+          "IsFromCustomer": false,
+          "Text": "How can I help you?"
+        }
+      ]
+    },
+    {
+      "IssueId": 40001,
+      "CompanyGroupId": 50001,
+      "Messages": [
+        {
+          "IsFromCustomer": true,
+          "Text": "Hey Acme, I am having problems with my cable tv..."
+        },
+        {
+          "IsFromCustomer": false,
+          "Text": "Hey Wernzio, What problems are you experiencing?"
+        },
+        {
+          "IsFromCustomer": true,
+          "Text": "From like a hour ago my able service just stopped workig"
+        },
+        {
+          "IsFromCustomer": false,
+          "Text": "Interesting, let me quickly have a look what the status for your neighborhood is."
+        },
+        {
+          "IsFromCustomer": false,
+          "Text": "Give me a moment"
+        },
+        {
+          "IsFromCustomer": false,
+          "Text": "It seems currently we are experiencing technical problems in near your vicinity."
+        },
+        {
+          "IsFromCustomer": false,
+          "Text": "We have sent out a technician and expect to have the problem resolved within the next 30min. I am sorry for the inconveniences."
+        },
+        {
+          "IsFromCustomer": true,
+          "Text": "Not a problem."
+        },
+        {
+          "IsFromCustomer": true,
+          "Text": "So my service should be resolve within he next 30 min?"
+        },
+        {
+          "IsFromCustomer": false,
+          "Text": "Give or take a few minutes. If you wish to check in later what the status is just contact us again."
+        },
+        {
+          "IsFromCustomer": false,
+          "Text": "Can I assist you with anything else?"
+        },
+        {
+          "IsFromCustomer": true,
+          "Text": "No I am fine thanks.."
+        },
+        {
+          "IsFromCustomer": false,
+          "Text": "In that case have a good night further Wernzio."
+        }
+      ]
+    }
+  ]
+}
