@@ -1,78 +1,103 @@
-from .base import BaseAutoCompleteModel
-import datrie
-import string
-import pandas as pd
-import json
-import nltk
+"""Most Popular Completion model classes."""
+
 import operator
+import string
+import json
+import pandas as pd
+import nltk
+import datrie
+from .base import BaseAutoCompleteModel
 
 
 class MostPopularCompletionModel(BaseAutoCompleteModel):
     """Most Popular Completion (Bar-Yossef Kraus 2011) trie based model."""
 
-    def load(self, trie_file):
-        """Load the trie data structure storing completions and frequencies."""
-        df = pd.DataFrame()
-        return df
+    def __init__(self, max_completions=5):
+        """Init the model with a maximum number of returned completions."""
+        self.max_completions = max_completions
+        self.trie = None
 
-    def build_trie(self, corpus_file):
-        """Read a corpus file and build the trie data structure."""
+    def load(self, file):
+        """Load the trie data structure storing completions and frequencies."""
+        return file
+
+    @staticmethod
+    def _read_corpus(corpus_file):
+        """Read a corpus file and return a dataframe of messages."""
         # Deserialize the corpus file into a dict
-        with open(corpus_file, encoding='utf8') as f:
-            corpus_json = json.loads(f.read())
+        with open(corpus_file, encoding="utf8") as file:
+            corpus_json = json.loads(file.read())
 
         # Create a dataframe of messages from the corpus dict
         df_messages = pd.io.json.json_normalize(
             data=corpus_json,
-            record_path=['Issues', 'Messages'],
-            meta=[
-                ['Issues', 'CompanyGroupId'],
-                ['Issues', 'IssueId']
-            ]
+            record_path=["Issues", "Messages"],
+            meta=[["Issues", "CompanyGroupId"], ["Issues", "IssueId"]],
         )
 
         # Rename columns for simplicity of usage
         new_columns = {
-            'Issues.IssueId': 'IssueId',
-            'Issues.CompanyGroupId': 'CompanyGroupId'
+            "Issues.IssueId": "IssueId",
+            "Issues.CompanyGroupId": "CompanyGroupId",
         }
         df_messages.rename(columns=new_columns, inplace=True)
+        return df_messages
 
+    @staticmethod
+    def _split_into_sentences(df_messages):
+        """Split a dataframe of messages into a dataframe of sentences."""
         # Instantiate a Punkt tokenizer from the english pickle
-        tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
+        tokenizer = nltk.data.load("tokenizers/punkt/english.pickle")
 
         # Split each message row into its different sentences and create a
         # dataframe of sentences. Note: the creation of the sentences dataframe
         # might not be scalable for a corpus of a billion messages with this
         # implementation. A clever usage of pandas stack() and joins might
         # enable to do it in a more efficient fashion.
-        columns = ['IssueId', 'CompanyGroupId', 'IsFromCustomer', 'SentenceId',
-                   'Sentence']
+        columns = [
+            "IssueId",
+            "CompanyGroupId",
+            "IsFromCustomer",
+            "SentenceId",
+            "Sentence",
+        ]
         df_sentences = pd.DataFrame(columns=columns)
         for message in df_messages.itertuples():
             sentences = tokenizer.tokenize(message.Text)
             for i, sentence in enumerate(sentences):
-                new_row = [message.IssueId, message.CompanyGroupId,
-                           message.IsFromCustomer, i, sentence]
+                new_row = [
+                    message.IssueId,
+                    message.CompanyGroupId,
+                    message.IsFromCustomer,
+                    i,
+                    sentence,
+                ]
                 df_sentences = df_sentences.append(
-                    dict(zip(columns, new_row)),
-                    ignore_index=True
+                    dict(zip(columns, new_row)), ignore_index=True
                 )
+        return df_sentences
 
-        # Computes the frequencies for each non-customer sentence in the corpus
-        not_customer = df_sentences.IsFromCustomer == False  # noqa: E712
-        sentences_freq = df_sentences[not_customer].Sentence.value_counts()
+    @staticmethod
+    def _insert_into_trie(items):
+        """Insert items into a datrie trie."""
+        trie = datrie.Trie(string.printable)  # noqa
+        for key, val in items.iteritems():
+            trie[key] = val
+        return trie
 
-        # Create and build the trie by inserting each sentence and its freq
-        self.trie = datrie.Trie(string.printable)
-        for sentence, freq in sentences_freq.iteritems():
-            self.trie[sentence] = freq
+    def build_trie(self, corpus_file):
+        """Read a corpus file and build the trie data structure."""
+        df_messages = self._read_corpus(corpus_file)
+        not_customer = df_messages.IsFromCustomer == False  # noqa: E712
+        df_sentences = self._split_into_sentences(df_messages[not_customer])
+        sentences_freq = df_sentences.Sentence.value_counts()
+        self.trie = self._insert_into_trie(sentences_freq)
         return self.trie
 
     def generate_completions(self, prefix):
         """Generate completions for a given prefix."""
         # Return empty list if prefix is empty
-        if prefix == '':
+        if prefix == "":
             return []
 
         # Else, get sentences with their frequencies from the trie
@@ -80,7 +105,7 @@ class MostPopularCompletionModel(BaseAutoCompleteModel):
         sorted_d = sorted(
             dict(sentences_freq).items(),
             key=operator.itemgetter(1),
-            reverse=True
+            reverse=True,
         )
 
         # Return only a maximum number of completions set during model init

@@ -1,15 +1,13 @@
+"""Abstract Base Class for auto-complete models."""
+
 from abc import ABCMeta, abstractmethod
 
 
 class BaseAutoCompleteModel(metaclass=ABCMeta):
     """Abstract base class for auto-complete models."""
 
-    def __init__(self, max_completions=5):
-        """Init the model with a maximum number of returned completions."""
-        self.max_completions = max_completions
-
     @abstractmethod
-    def generate_completions(prefix):
+    def generate_completions(self, prefix):
         """Generate completions for a given prefix."""
 
     @abstractmethod
