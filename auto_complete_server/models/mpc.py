@@ -88,6 +88,7 @@ class MostPopularCompletionModel(BaseAutoCompleteModel):
     def build_trie(self, corpus_file):
         """Read a corpus file and build the trie data structure."""
         df_messages = self._read_corpus(corpus_file)
+        # pylint: disable=C0121
         not_customer = df_messages.IsFromCustomer == False  # noqa: E712
         df_sentences = self._split_into_sentences(df_messages[not_customer])
         sentences_freq = df_sentences.Sentence.value_counts()
