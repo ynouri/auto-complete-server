@@ -20,7 +20,7 @@ class install(_install):
 
 
 extras_require = {
-    "lint": ["flake8", "black"],
+    "lint": ["flake8", "black", "pylint"],
     "docs": ["sphinx"],
     "dev": ["pytest>=3.4.0,<4", "setuptools>=38.5.0", "tox>=2.9.0"],
 }
@@ -43,6 +43,7 @@ setup(
         "numpy>=1.14.0",
         "nltk>=3.2.0",
         "datrie>=0.7.1",
+        "tornado>=4.5.1",
     ],
     setup_requires=["nltk"],
     python_requires=">=3.6,<4",
