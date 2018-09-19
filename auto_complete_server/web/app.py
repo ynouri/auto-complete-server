@@ -20,6 +20,8 @@ class AutoCompleteHandler(tornado.web.RequestHandler):
         """Handle get requests."""
         prefix = self.get_argument("q")
         completions = {"completions": MPC.generate_completions(prefix)}
+        self.set_header("Access-Control-Allow-Headers", "x-requested-with")
+        self.set_header("Access-Control-Allow-Origin", "*")
         self.write(completions)
 
 
