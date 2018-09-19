@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Auto-Complete Client</title>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script>
+  // Display the completions results
+  function displayCompletions(data, start) {
+    var items = [];
+    $.each( data['completions'], function( key, val ) {
+      items.push( "<li id='" + key + "'>" + val + "</li>" );
+    });
+
+    $( "#completions" ).html(items);
+    var duration = (new Date().getTime() - start);
+    $( "#request-time" ).text(duration.toString() + "ms");
+  }
+  // When document ready
+  $(document).ready(function() {
+    // Triggered when a change is made in text area
+    $( "#textarea" ).on('keyup paste', function() {
+      prefix = $( "#textarea" ).val();
+      url = $("#auto-complete-server" ).val() + "?q=" + prefix;
+      console.debug("Auto-Complete Request: " + url);
+      var start = new Date().getTime();
+      $.getJSON(url, function(data) {
+        displayCompletions(data, start);
+      });
+    });
+  });
+  </script>
+</head>
+<body>
+<div class="container">
+<h1>Auto-Complete Client</h1>
+
+<h2>REST API address</h2>
+<input id="auto-complete-server" size="50" value="http://localhost:13000/autocomplete">
+
+<h2>Enter text here:</h2>
+<textarea rows="4" cols="50" id="textarea">
+</textarea>
+
+<h2>Request time</h2>
+
+<p id="request-time"></p>
+
+<h2>Auto-completions</h2>
+
+<ol id="completions">
+</ol>
+
+</div>
+
+</body>
+</html>
