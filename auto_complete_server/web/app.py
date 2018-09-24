@@ -1,14 +1,21 @@
 """Tornado web server."""
 # pylint: disable=W0223
 import os
+import logging
 import tornado.ioloop
 import tornado.web
+from tornado.options import define, options
+import tornado.options
 from auto_complete_server.models.mpc import MostPopularCompletionModel
 
 
-TEST_CORPUS_FILE = os.path.join("data", "test_conversations.json")
+DEFAULT_CORPUS_FILE = os.path.join("data", "test_conversations.json")
+define("corpus-file", DEFAULT_CORPUS_FILE, help="Corpus file to load")
+define("port", 13000, help="Port to listen on")
+define("autoreload", False, help="Enable auto-reload")
+
+# Instantiate model at module level
 MPC = MostPopularCompletionModel(max_completions=3)
-MPC.build_trie(TEST_CORPUS_FILE)
 
 
 class AutoCompleteHandler(tornado.web.RequestHandler):
@@ -33,14 +40,17 @@ class MainHandler(tornado.web.RequestHandler):
 
 def make_app():
     """Instantiate the Tornado web application with settings and routes."""
-    return tornado.web.Application(
+    MPC.build_trie(options.corpus_file)
+    app = tornado.web.Application(
         [(r"/autocomplete", AutoCompleteHandler), (r"/", MainHandler)],
-        autoreload=True,
+        autoreload=options.autoreload,
     )
+    return app
 
 
 if __name__ == "__main__":
-    # Create and start web app
+    tornado.options.parse_command_line()
     APP = make_app()
-    APP.listen(13000)
+    APP.listen(options.port)
+    logging.info("Web server listening on %s", options.port)
     tornado.ioloop.IOLoop.current().start()

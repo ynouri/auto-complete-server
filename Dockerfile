@@ -9,4 +9,4 @@ WORKDIR /auto-complete-docker
 RUN python setup.py install
 
 # Run app
-CMD ["python", "-m", "auto_complete_server.web.app"]
+CMD ["python", "-m", "auto_complete_server.web.app", "--corpus-file=data/sample_conversations.json"]
