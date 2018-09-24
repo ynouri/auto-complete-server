@@ -44,6 +44,7 @@ setup(
         "nltk>=3.2.0",
         "datrie>=0.7.1",
         "tornado>=4.5.1",
+        "click>=6.7.0",
     ],
     setup_requires=["nltk"],
     python_requires=">=3.6,<4",
