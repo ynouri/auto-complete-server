@@ -17,9 +17,14 @@ class MostPopularCompletionModel(BaseAutoCompleteModel):
         self.max_completions = max_completions
         self.trie = None
 
+    def save(self, file):
+        """Save the trie data structure to a file."""
+        self.trie.save(file)
+
     def load(self, file):
         """Load the trie data structure storing completions and frequencies."""
-        return file
+        self.trie = datrie.Trie.load(file)
+        return self.trie
 
     @staticmethod
     def _read_corpus(corpus_file):
