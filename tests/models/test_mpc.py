@@ -3,7 +3,7 @@ from auto_complete_server.models.mpc import MostPopularCompletionModel
 import os.path
 
 TEST_CORPUS_FILE = os.path.join("data", "test_conversations.json")
-TEST_SAVE_FILE = os.path.join("models", "test.trie")
+TEST_SAVE_FILE = os.path.join("models", "test_conversations.trie")
 
 
 def test_model_init():
