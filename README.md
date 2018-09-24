@@ -10,7 +10,7 @@ This auto-complete service suggests relevant sentences completions based on a fe
 
 ## Data & Notebook
 
-The corpus of conversation contains 16,508 sentences written by customer service representatives. [This notebook](auto-complete-server/notebooks/Data Analysis & Prototype.ipynb) quickly explores the dataset and attempts to build a small language model prototype.
+The corpus of conversation contains 16,508 sentences written by customer service representatives. [This notebook](notebooks/Data Analysis & Prototype.ipynb) quickly explores the dataset and attempts to build a small language model prototype.
 
 
 ## Architecture
