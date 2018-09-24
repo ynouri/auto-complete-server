@@ -161,6 +161,6 @@ Mean latency:        584.3 ms
 
 ## References
 
-* [Jurafsky & Manning, Speech and Language Processing, 2018](https://web.stanford.edu/~jurafsky/slp3/ed3book.pdf)
+* [Jurafsky & Martin, Speech and Language Processing, 2018](https://web.stanford.edu/~jurafsky/slp3/ed3book.pdf)
 * [Mikhail Korobov, Benchmark of various Tries implementations, 2012](http://kmike.ru/python-data-structures/)
 * [Bar-Yossef & Kraus, Context-Sensitive Query Auto-Completion, 2011](https://naamakraus.github.io/papers/fr332-bar-yossef.pdf)
