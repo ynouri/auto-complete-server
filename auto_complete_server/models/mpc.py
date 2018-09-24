@@ -3,6 +3,7 @@
 import operator
 import string
 import json
+import logging
 import pandas as pd
 import nltk
 import datrie
@@ -29,6 +30,7 @@ class MostPopularCompletionModel(BaseAutoCompleteModel):
     @staticmethod
     def _read_corpus(corpus_file):
         """Read a corpus file and return a dataframe of messages."""
+        logging.info("Start reading corpus...")
         # Deserialize the corpus file into a dict
         with open(corpus_file, encoding="utf8") as file:
             corpus_json = json.loads(file.read())
@@ -46,11 +48,13 @@ class MostPopularCompletionModel(BaseAutoCompleteModel):
             "Issues.CompanyGroupId": "CompanyGroupId",
         }
         df_messages.rename(columns=new_columns, inplace=True)
+        logging.info("Finished reading corpus.")
         return df_messages
 
     @staticmethod
     def _split_into_sentences(df_messages):
         """Split a dataframe of messages into a dataframe of sentences."""
+        logging.info("Start split messages into sentences...")
         # Instantiate a Punkt tokenizer from the english pickle
         tokenizer = nltk.data.load("tokenizers/punkt/english.pickle")
 
@@ -80,14 +84,17 @@ class MostPopularCompletionModel(BaseAutoCompleteModel):
                 df_sentences = df_sentences.append(
                     dict(zip(columns, new_row)), ignore_index=True
                 )
+        logging.info("Finished split messages into sentences.")
         return df_sentences
 
     @staticmethod
     def _insert_into_trie(items):
         """Insert items into a datrie trie."""
+        logging.info("Start inserting into trie...")
         trie = datrie.Trie(string.printable)  # noqa
         for key, val in items.iteritems():
             trie[key] = val
+        logging.info("Finished inserting into trie.")
         return trie
 
     def build_trie(self, corpus_file):
