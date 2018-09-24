@@ -20,17 +20,19 @@ class MostPopularCompletionModel(BaseAutoCompleteModel):
 
     def save(self, file):
         """Save the trie data structure to a file."""
+        logging.info("Saving trie to %s", file)
         self.trie.save(file)
 
     def load(self, file):
         """Load the trie data structure storing completions and frequencies."""
+        logging.info("Loading trie from %s", file)
         self.trie = datrie.Trie.load(file)
         return self.trie
 
     @staticmethod
     def _read_corpus(corpus_file):
         """Read a corpus file and return a dataframe of messages."""
-        logging.info("Start reading corpus...")
+        logging.info("Start reading corpus from %s", corpus_file)
         # Deserialize the corpus file into a dict
         with open(corpus_file, encoding="utf8") as file:
             corpus_json = json.loads(file.read())
