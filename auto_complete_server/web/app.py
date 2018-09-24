@@ -9,8 +9,8 @@ import tornado.options
 from auto_complete_server.models.mpc import MostPopularCompletionModel
 
 
-DEFAULT_CORPUS_FILE = os.path.join("data", "test_conversations.json")
-define("corpus-file", DEFAULT_CORPUS_FILE, help="Corpus file to load")
+DEFAULT_TRIE_FILE = os.path.join("models", "test_conversations.trie")
+define("trie-file", DEFAULT_TRIE_FILE, help="Trie file to load")
 define("port", 13000, help="Port to listen on")
 define("autoreload", False, help="Enable auto-reload")
 
@@ -40,7 +40,7 @@ class MainHandler(tornado.web.RequestHandler):
 
 def make_app():
     """Instantiate the Tornado web application with settings and routes."""
-    MPC.build_trie(options.corpus_file)
+    MPC.load(options.trie_file)
     app = tornado.web.Application(
         [(r"/autocomplete", AutoCompleteHandler), (r"/", MainHandler)],
         autoreload=options.autoreload,
