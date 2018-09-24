@@ -8,6 +8,11 @@ Fast auto completion server.
 
 This auto-complete service suggests relevant sentences completions based on a few characters or words entered by a user. The service is fast and can be queried every time the user enters a new keystroke. The auto-completion model is trained on a corpus of conversations.
 
+## Data & Notebook
+
+The corpus of conversation contains 16,508 sentences written by customer service representatives. [This notebook](auto-complete-server/notebooks/Data Analysis & Prototype.ipynb) quickly explores the dataset and attempts to build a small language model prototype.
+
+
 ## Architecture
 
 `auto-complete-server` is made of 3 main components:
@@ -18,6 +23,7 @@ This auto-complete service suggests relevant sentences completions based on a fe
 
 
 * **The Tornado web server**. Tornado web framework is fast and non-blocking on network I/O. It is lightweight and therefore adapted to to our needs for the auto-complete micro service. It exposes the `generate_completions` function of the AutoCompleteModel object through a REST API. The completions are returned on an HTTP GET request on the the `autocomplete` resource. The completions are returned in JSON.
+
 
 
 ## Getting started
