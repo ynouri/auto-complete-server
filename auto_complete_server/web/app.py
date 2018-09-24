@@ -1,5 +1,5 @@
 """Tornado web server."""
-
+# pylint: disable=W0223
 import os
 import tornado.ioloop
 import tornado.web
@@ -14,8 +14,6 @@ MPC.build_trie(TEST_CORPUS_FILE)
 class AutoCompleteHandler(tornado.web.RequestHandler):
     """Handle auto-complete requests and returns completions json."""
 
-    # pylint: disable=W0223
-
     def get(self, *args, **kwargs):
         """Handle get requests."""
         prefix = self.get_argument("q")
@@ -25,10 +23,19 @@ class AutoCompleteHandler(tornado.web.RequestHandler):
         self.write(completions)
 
 
+class MainHandler(tornado.web.RequestHandler):
+    """Serve the web service main page."""
+
+    def get(self, *args, **kwargs):
+        """Render a client page, without templating."""
+        self.render("static/client.html")
+
+
 def make_app():
     """Instantiate the Tornado web application with settings and routes."""
     return tornado.web.Application(
-        [(r"/autocomplete", AutoCompleteHandler)], autoreload=True
+        [(r"/autocomplete", AutoCompleteHandler), (r"/", MainHandler)],
+        autoreload=True,
     )
 
 

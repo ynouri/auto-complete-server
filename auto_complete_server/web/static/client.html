@@ -38,7 +38,22 @@
 <div class="container">
 <h1>Auto-Complete Client</h1>
 
+<p>
+  This light client for the Auto-Complete Server enables you to test the
+  completion functionality based on your own text input. Whenever the text box
+  area is modified (<i>keyup</i> and <i>paste</i> events), a GET HTTP request
+  is sent from your browser (using <i>jQuery .getJSON</i>) to the auto-complete
+  server REST API which address is specified above.
+</p>
+
+<p>
+  The results of each request are displayed in the <i>Auto-completions</i>
+  section below. The timings of each GET request (from browser to server back
+  to browser) are displayed in the <i>Request time</i> section.
+</p>
+
 <h2>REST API address</h2>
+<p>e.g. http://localhost:13000/autocomplete</p>
 <input id="auto-complete-server" size="50" value="http://localhost:13000/autocomplete">
 
 <h2>Enter text here:</h2>
