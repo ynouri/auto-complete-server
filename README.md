@@ -165,6 +165,32 @@ Requests per second: 821
 Mean latency:        584.3 ms
 ```
 
+## Backlog
+
+The following points could be considered for next steps / improvements.
+
+### Language model
+* Add an Interpolated Kneser-Ney language model as an alternative backend to the auto-complete. KenLM, SRILM, or very recent NLTK.LM module could be considered for this. Implement serialization/deserialization
+* Add a neural language model
+* Compare quality of different models
+* Split real corpus in a training and test set. Measure perplexity / cross-entropy scores of our language model on the test set.
+* Implement pruning of low-probability scores to keep the dimensionality low.
+* Decouple language model & completion function
+* Language model results could be stored using an intermediary ARPA format (e.g. using Python arpa package) The trie data structure would then be built from this language model arpa file.
+
+### Documentation
+* Set up a Sphinx / readthedoc documentation.
+
+### Web service scaling
+* Test scaling of the auto-complete server. What load / requests per second / concurrency requires introducing load balancing?
+* Add nginx as a reverse proxy and load balancer for several auto-complete services, that could use different CPU cores of the same VM and also different VMs.
+* Look into scaling solutions using Kubernetes for easy cloud deployment.
+
+### Test automation
+* Automate performance tests. Perf tests could for example be compared by using a dedicated server (therefore physical hardware at constant load).
+* Add a heavier test that builds an auto-complete model based on the full sample corpus (and not just on the “unit test” corpus). Exclude this test from pytest defaults, include it only in the CI
+
+
 ## References
 
 * [Jurafsky & Martin, Speech and Language Processing, 2018](https://web.stanford.edu/~jurafsky/slp3/ed3book.pdf)
